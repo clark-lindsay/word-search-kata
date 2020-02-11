@@ -1,0 +1,10 @@
+{
+  "name": "word-search-kata",
+  "version": "1.0.0",
+  "description": "  TDD and design practice using the Word Search kata from Pillar Technologies, written in Typescript.",
+  "main": "index.js",
+  "repository": "https://github.com/clark-lindsay/word-search-kata.git",
+  "author": "clark-lindsay <clarklindsay96@gmail.com>",
+  "license": "MIT",
+  "private": false
+}
