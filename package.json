@@ -6,5 +6,15 @@
   "repository": "https://github.com/clark-lindsay/word-search-kata.git",
   "author": "clark-lindsay <clarklindsay96@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "@types/jest": "^25.1.2",
+    "prettier": "^1.19.1",
+    "ts-jest": "^25.2.0"
+  },
+  "dependencies": {
+    "@babel/preset-typescript": "^7.8.3",
+    "@types/node": "^13.7.1",
+    "typescript": "^3.7.5"
+  }
 }
