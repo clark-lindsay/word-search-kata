@@ -8,16 +8,30 @@ export function findWords(targets: string[], puzzleText: string): object {
   let mutablePuzzleText = puzzleText;
 
   for (const word of targets.sort(isLongerThan)) {
-    if (mutablePuzzleText.includes(word)) {
-      const wordStartIndex = mutablePuzzleText.search(word);
-      result[word] = range(wordStartIndex, wordStartIndex + word.length);
-      mutablePuzzleText = mutablePuzzleText.replace(word, '|'.repeat(word.length));
-    }
+    mutablePuzzleText = findWordAndReplaceWithSymbols(word, mutablePuzzleText);
+    mutablePuzzleText = findWordAndReplaceWithSymbols(word, mutablePuzzleText, true);
   }
 
   return result;
+
+  function findWordAndReplaceWithSymbols(word: string, text: string, reverseWord?: boolean): string {
+    let searchWord = reverseWord ? reverseOf(word) : word;
+    if (text.includes(searchWord)) {
+      const wordStartIndex = text.search(searchWord);
+      result[word] = range(wordStartIndex, wordStartIndex + searchWord.length);
+      return text.replace(searchWord, '|'.repeat(searchWord.length));
+    }
+    return text;
+  }
 }
 
 function isLongerThan(a: string, b: string): number {
   return b.length - a.length;
+}
+
+function reverseOf(str: string) {
+  return str
+    .split('')
+    .reverse()
+    .join('');
 }

@@ -21,4 +21,15 @@ describe('the findWords function', () => {
 
     expect(() => findWords(targets, puzzleText)).toThrow();
   });
+
+  it('will find words both backwards and forwards', () => {
+    const targets = ['target', 'sdrawkcab', 'racecar'];
+    const puzzleText = 'some of these targets are backwards, but not racecar';
+
+    expect(findWords(targets, puzzleText)).toEqual({
+      target: [14, 15, 16, 17, 18, 19],
+      sdrawkcab: [26, 27, 28, 29, 30, 31, 32, 33, 34],
+      racecar: [45, 46, 47, 48, 49, 50, 51]
+    });
+  });
 });
