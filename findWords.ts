@@ -6,12 +6,18 @@ export function findWords(targets: string[], puzzleText: string): object {
   }
   const result = {};
   let mutablePuzzleText = puzzleText;
-  for (const word of targets.sort((a, b) => b.length - a.length)) {
+
+  for (const word of targets.sort(isLongerThan)) {
     if (mutablePuzzleText.includes(word)) {
       const wordStartIndex = mutablePuzzleText.search(word);
       result[word] = range(wordStartIndex, wordStartIndex + word.length);
       mutablePuzzleText = mutablePuzzleText.replace(word, '|'.repeat(word.length));
     }
   }
+
   return result;
+}
+
+function isLongerThan(a: string, b: string): number {
+  return b.length - a.length;
 }
