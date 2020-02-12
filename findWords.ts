@@ -9,19 +9,24 @@ export function findWords(targets: string[], puzzleText: string): object {
 
   for (const word of targets.sort(isLongerThan)) {
     mutablePuzzleText = findWordAndReplaceWithSymbols(word, mutablePuzzleText);
-    mutablePuzzleText = findWordAndReplaceWithSymbols(word, mutablePuzzleText, true);
   }
 
   return result;
 
   function findWordAndReplaceWithSymbols(word: string, text: string, reverseWord?: boolean): string {
-    let searchWord = reverseWord ? reverseOf(word) : word;
-    if (text.includes(searchWord)) {
-      const wordStartIndex = text.search(searchWord);
-      result[word] = range(wordStartIndex, wordStartIndex + searchWord.length);
-      return text.replace(searchWord, '|'.repeat(searchWord.length));
+    if (text.includes(word)) {
+      addToResult({ reverse: false });
+      return text.replace(word, '|'.repeat(word.length));
+    } else if (text.includes(reverseOf(word))) {
+      addToResult({ reverse: true });
+      return text.replace(reverseOf(word), '|'.repeat(word.length));
     }
     return text;
+
+    function addToResult({ reverse = false }): void {
+      const wordStartIndex = text.search(reverse ? reverseOf(word) : word);
+      result[word] = range(wordStartIndex, wordStartIndex + word.length);
+    }
   }
 }
 
