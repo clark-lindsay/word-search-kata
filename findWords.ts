@@ -10,21 +10,8 @@ export function findWords(targets: string[], puzzleText: string): object {
     if (mutablePuzzleText.includes(word)) {
       const wordStartIndex = mutablePuzzleText.search(word);
       result[word] = range(wordStartIndex, wordStartIndex + word.length);
-      mutablePuzzleText = replaceFirstSubstringOccurenceWithChars(mutablePuzzleText, word, '|');
+      mutablePuzzleText = mutablePuzzleText.replace(word, '|'.repeat(word.length));
     }
   }
   return result;
-}
-
-function replaceFirstSubstringOccurenceWithChars(
-  text: string,
-  substring: string,
-  replacementChar: string = '|'
-): string {
-  const substringStartIndex = text.indexOf(substring);
-  return (
-    text.substring(0, substringStartIndex) +
-    replacementChar.repeat(substring.length) +
-    text.substring(substringStartIndex + substring.length)
-  );
 }
