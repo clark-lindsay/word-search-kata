@@ -1,4 +1,4 @@
-import { range } from './util';
+import { range, reverseOf } from './util';
 
 export function findWords(targets: string[], puzzleText: string): object {
   if (puzzleText.includes('|')) {
@@ -32,11 +32,4 @@ export function findWords(targets: string[], puzzleText: string): object {
 
 function isLongerThan(a: string, b: string): number {
   return b.length - a.length;
-}
-
-function reverseOf(str: string) {
-  return str
-    .split('')
-    .reverse()
-    .join('');
 }

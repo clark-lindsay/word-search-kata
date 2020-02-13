@@ -1,4 +1,4 @@
-import { range } from './util';
+import { range, reverseOf } from './util';
 
 describe('the range function', () => {
   it('returns a range from the given start to the given end value, inclusive-exclusive', () => {
@@ -13,5 +13,17 @@ describe('the range function', () => {
   it('throws an error if the start or end is negative', () => {
     expect(() => range(-1, 4)).toThrow();
     expect(() => range(0, -5)).toThrow();
+  });
+});
+
+describe('the reverseOf function', () => {
+  it('will return a backwards version of whatever string it is given', () => {
+    expect(reverseOf('butter')).toEqual('rettub');
+    expect(reverseOf('word')).toEqual('drow');
+    expect(reverseOf('a')).toEqual('a');
+  });
+
+  it('will return an empty string if it is given an empty string', () => {
+    expect(reverseOf('')).toEqual('');
   });
 });
