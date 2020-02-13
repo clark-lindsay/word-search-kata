@@ -8,6 +8,26 @@ describe('the findWords function', () => {
     expect(findWords(targets, puzzleText)).toEqual({ word: [10, 11, 12, 13], string: [0, 1, 2, 3, 4, 5] });
   });
 
+  it('will find words both backwards and forwards', () => {
+    const targets = ['target', 'sdrawkcab', 'racecar'];
+    const puzzleText = 'some of these targets are backwards, but not racecar';
+
+    expect(findWords(targets, puzzleText)).toEqual({
+      target: [14, 15, 16, 17, 18, 19],
+      sdrawkcab: [26, 27, 28, 29, 30, 31, 32, 33, 34],
+      racecar: [45, 46, 47, 48, 49, 50, 51]
+    });
+  });
+
+  it('will only return one index range for a word, even if that word appears twice in the puzzle text', () => {
+    const targets = ['target'];
+    const puzzleText = 'the word target is a target in this text';
+
+    expect(findWords(targets, puzzleText)).toEqual({
+      target: [9, 10, 11, 12, 13, 14]
+    });
+  });
+
   it('will return an empty object if none of the targets appear in the puzzle text', () => {
     const targets = ['word', 'string'];
     const puzzleText = 'totallydifferenttext';
@@ -27,16 +47,5 @@ describe('the findWords function', () => {
     const puzzleText = 'stringwith|pipes|intit';
 
     expect(() => findWords(targets, puzzleText)).toThrow();
-  });
-
-  it('will find words both backwards and forwards', () => {
-    const targets = ['target', 'sdrawkcab', 'racecar'];
-    const puzzleText = 'some of these targets are backwards, but not racecar';
-
-    expect(findWords(targets, puzzleText)).toEqual({
-      target: [14, 15, 16, 17, 18, 19],
-      sdrawkcab: [26, 27, 28, 29, 30, 31, 32, 33, 34],
-      racecar: [45, 46, 47, 48, 49, 50, 51]
-    });
   });
 });
