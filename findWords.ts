@@ -1,6 +1,6 @@
 import { range, reverseOf } from './util';
 
-export function findWords(targets: string[], puzzleText: string): object {
+export function findWords(targets: string[], puzzleText: string): { [key: string]: number[] } {
   if (puzzleText.includes('|')) {
     throw new Error('The puzzleText must not include the "pipe" ( | ) character');
   }
