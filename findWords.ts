@@ -4,7 +4,7 @@ export function findWords(targets: string[], puzzleText: string): object {
   if (puzzleText.includes('|')) {
     throw new Error('The puzzleText must not include the "pipe" ( | ) character');
   }
-  const result = {};
+  const result: { [key: string]: number[] } = {};
   let mutablePuzzleText = puzzleText;
 
   for (const word of targets.sort(isLongerThan)) {
