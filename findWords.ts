@@ -13,7 +13,7 @@ export function findWords(targets: string[], puzzleText: string): object {
 
   return result;
 
-  function findWordAndReplaceWithSymbols(word: string, text: string, reverseWord?: boolean): string {
+  function findWordAndReplaceWithSymbols(word: string, text: string): string {
     if (text.includes(word)) {
       addToResult({ reverse: false });
       return text.replace(word, '|'.repeat(word.length));
