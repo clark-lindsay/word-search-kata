@@ -1,4 +1,4 @@
-import { range, reverseOf } from './util';
+import { range, removeCommas, reverseOf } from './util';
 
 describe('the range function', () => {
   it('returns a range from the given start to the given end value, inclusive-exclusive', () => {
@@ -25,5 +25,20 @@ describe('the reverseOf function', () => {
 
   it('will return an empty string if it is given an empty string', () => {
     expect(reverseOf('')).toEqual('');
+  });
+});
+
+describe('the removeCommas function', () => {
+  it('will return the same string, but with the commas removed', () => {
+    expect(removeCommas('comma,separated,values')).toEqual('commaseparatedvalues');
+  });
+
+  it('will return an empty string when it is given one, or a string made only of commas', () => {
+    expect(removeCommas('')).toEqual('');
+    expect(removeCommas(',,,')).toEqual('');
+  });
+
+  it('will not alter existing whitespace', () => {
+    expect(removeCommas('a string, but...\n with white,,space')).toEqual('a string but...\n with whitespace');
   });
 });

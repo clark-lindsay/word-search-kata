@@ -5,6 +5,10 @@ export function range(start: number, end: number): number[] {
   return Array.from(new Array(end - start), (_, i) => i + start);
 }
 
+export function removeCommas(str: string): string {
+  return str.split(',').join('');
+}
+
 export function reverseOf(str: string) {
   return str
     .split('')
