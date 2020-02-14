@@ -9,7 +9,7 @@ export function wordSearch(targets: string[], puzzleGrid: string[]): { [key: str
   return result;
 
   function searchRows(): void {
-    for (const [index, row] of puzzleGrid.entries()) {
+    for (const [index, row] of getRows().entries()) {
       const match = findWords(targets, removeCommas(row));
       for (const [word, indexRange] of Object.entries(match)) {
         result[word] = indexRange.map(xCoordinate => [xCoordinate, index]);
@@ -23,16 +23,6 @@ export function wordSearch(targets: string[], puzzleGrid: string[]): { [key: str
       for (const [word, indexRange] of Object.entries(match)) {
         result[word] = indexRange.map(yCoordinate => [index, yCoordinate]);
       }
-    }
-
-    function getColumns(): string[] {
-      let columns: string[] = Array(puzzleGrid.length).fill('');
-      for (const row of puzzleGrid) {
-        for (const [index, char] of row.split(',').entries()) {
-          columns[index] += char;
-        }
-      }
-      return columns;
     }
   }
 
@@ -50,24 +40,38 @@ export function wordSearch(targets: string[], puzzleGrid: string[]): { [key: str
         });
       }
     }
+  }
 
-    function getDiagonals(): string[] {
-      let diagonals = Array(puzzleGrid.length * 2 - 1).fill('');
-      for (const [xCoordinate, row] of puzzleGrid.entries()) {
-        for (const [yCoordinate, char] of row.split(',').entries()) {
-          diagonals[xCoordinate + yCoordinate] += char;
-        }
+  function getRows(): string[] {
+    return puzzleGrid;
+  }
+
+  function getColumns(): string[] {
+    let columns: string[] = Array(puzzleGrid.length).fill('');
+    for (const row of puzzleGrid) {
+      for (const [index, char] of row.split(',').entries()) {
+        columns[index] += char;
       }
-
-      let mirroredDiagonals = Array(puzzleGrid.length * 2 - 1).fill('');
-      const mirroredPuzzleGrid = puzzleGrid.map(str => reverseOf(str));
-      for (const [xCoordinate, row] of mirroredPuzzleGrid.entries()) {
-        for (const [yCoordinate, char] of row.split(',').entries()) {
-          mirroredDiagonals[xCoordinate + yCoordinate] += char;
-        }
-      }
-
-      return diagonals.concat(mirroredDiagonals.reverse());
     }
+    return columns;
+  }
+
+  function getDiagonals(): string[] {
+    let diagonals = Array(puzzleGrid.length * 2 - 1).fill('');
+    for (const [xCoordinate, row] of puzzleGrid.entries()) {
+      for (const [yCoordinate, char] of row.split(',').entries()) {
+        diagonals[xCoordinate + yCoordinate] += char;
+      }
+    }
+
+    let mirroredDiagonals = Array(puzzleGrid.length * 2 - 1).fill('');
+    const mirroredPuzzleGrid = puzzleGrid.map(str => reverseOf(str));
+    for (const [xCoordinate, row] of mirroredPuzzleGrid.entries()) {
+      for (const [yCoordinate, char] of row.split(',').entries()) {
+        mirroredDiagonals[xCoordinate + yCoordinate] += char;
+      }
+    }
+
+    return diagonals.concat(mirroredDiagonals.reverse());
   }
 }
