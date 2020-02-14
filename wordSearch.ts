@@ -1,5 +1,5 @@
 import { findWords } from './findWords';
-import { reverseOf } from './util';
+import { removeCommas, reverseOf } from './util';
 
 export function wordSearch(targets: string[], puzzleGrid: string[]): { [key: string]: number[][] } {
   let result: { [key: string]: number[][] } = {};
@@ -10,15 +10,16 @@ export function wordSearch(targets: string[], puzzleGrid: string[]): { [key: str
 
   function searchRows(): void {
     for (const [index, row] of puzzleGrid.entries()) {
-      const match = findWords(targets, row.split(',').join(''));
+      const match = findWords(targets, removeCommas(row));
       for (const [word, indexRange] of Object.entries(match)) {
         result[word] = indexRange.map(xCoordinate => [xCoordinate, index]);
       }
     }
   }
+
   function searchColumns(): void {
     for (const [index, col] of getColumns().entries()) {
-      const match = findWords(targets, col.split(',').join(''));
+      const match = findWords(targets, removeCommas(col));
       for (const [word, indexRange] of Object.entries(match)) {
         result[word] = indexRange.map(yCoordinate => [index, yCoordinate]);
       }
@@ -37,7 +38,7 @@ export function wordSearch(targets: string[], puzzleGrid: string[]): { [key: str
 
   function searchDiagonals(): void {
     for (const [diagonalIndex, diagonal] of getDiagonals().entries()) {
-      const match = findWords(targets, diagonal.split(',').join(''));
+      const match = findWords(targets, diagonal);
       for (const [word, indexRange] of Object.entries(match)) {
         result[word] = indexRange.map(indexInDiag => {
           const yCoordinate = indexInDiag;
