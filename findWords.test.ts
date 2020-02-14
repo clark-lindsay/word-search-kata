@@ -14,7 +14,7 @@ describe('the findWords function', () => {
 
     expect(findWords(targets, puzzleText)).toEqual({
       target: [14, 15, 16, 17, 18, 19],
-      sdrawkcab: [26, 27, 28, 29, 30, 31, 32, 33, 34],
+      sdrawkcab: [34, 33, 32, 31, 30, 29, 28, 27, 26],
       racecar: [45, 46, 47, 48, 49, 50, 51]
     });
   });

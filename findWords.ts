@@ -25,7 +25,10 @@ export function findWords(targets: string[], puzzleText: string): { [key: string
 
     function addToResult({ reverse = false }): void {
       const wordStartIndex = text.search(reverse ? reverseOf(word) : word);
-      result[word] = range(wordStartIndex, wordStartIndex + word.length);
+      const wordIndexRange = reverse
+        ? range(wordStartIndex, wordStartIndex + word.length).reverse()
+        : range(wordStartIndex, wordStartIndex + word.length);
+      result[word] = wordIndexRange;
     }
   }
 }
