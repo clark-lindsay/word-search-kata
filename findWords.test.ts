@@ -1,7 +1,7 @@
 import { findWords } from './findWords';
 
 describe('the findWords function', () => {
-  it('will return the index ranges of the target strings if it is contained, verbatim, in the input', () => {
+  it('will return the index ranges of the target strings if they are contained, verbatim, in the input', () => {
     const targets = ['word', 'string'];
     const puzzleText = 'stringwithwordinit';
 
@@ -35,11 +35,11 @@ describe('the findWords function', () => {
     expect(findWords(targets, puzzleText)).toEqual({});
   });
 
-  it('will favor the longer words when target strings have overlapping indices in the puzzle text', () => {
+  it('when two targets overlap, they will both be found', () => {
     const targets = ['word', 'or'];
     const puzzleText = 'stringwithwordinit';
 
-    expect(findWords(targets, puzzleText)).toEqual({ word: [10, 11, 12, 13] });
+    expect(findWords(targets, puzzleText)).toEqual({ word: [10, 11, 12, 13], or: [11, 12] });
   });
 
   it('will throw an error if the puzzleText includes the pipe character ( | ) since this is used in internal calculations', () => {
