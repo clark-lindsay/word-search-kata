@@ -71,4 +71,10 @@ describe('the wordSearch function', () => {
       ]
     });
   });
+
+  it('will return an empty object if it is given an empty puzzlegrid, or a puzzlegrid that does not contain any targets, or no targets', () => {
+    expect(wordSearch(['some', 'words'], [])).toEqual({});
+    expect(wordSearch(['some', 'words'], ['smol', 'word', 'puzl', 'grid'])).toEqual({});
+    expect(wordSearch([], ['smol', 'word', 'puzl', 'grid'])).toEqual({});
+  });
 });

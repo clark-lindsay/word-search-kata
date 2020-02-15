@@ -2,6 +2,9 @@ import { findWords } from './findWords';
 import { removeCommas, reverseOf } from './util';
 
 export function wordSearch(targets: string[], puzzleGrid: string[]): { [key: string]: number[][] } {
+  if (puzzleGrid.length < 2) {
+    return {};
+  }
   let result: { [key: string]: number[][] } = {};
   for (const gridElement of ['rows', 'columns', 'diagonals']) {
     result = Object.assign(result, targetsInGrid(gridElement));
