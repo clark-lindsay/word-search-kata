@@ -3,43 +3,47 @@ import { removeCommas, reverseOf } from './util';
 
 export function wordSearch(targets: string[], puzzleGrid: string[]): { [key: string]: number[][] } {
   let result: { [key: string]: number[][] } = {};
-  searchRows();
-  searchColumns();
-  searchDiagonals();
+  for (const gridElement of ['rows', 'columns', 'diagonals']) {
+    result = Object.assign(result, targetsInGrid(gridElement));
+  }
   return result;
 
-  function searchRows(): void {
-    for (const [index, row] of getRows().entries()) {
-      const match = findWords(targets, removeCommas(row));
+  function targetsInGrid(gridElementToSearch: string): { [key: string]: number[][] } {
+    let result: { [key: string]: number[][] } = {};
+
+    for (const [index, gridElement] of getElements(gridElementToSearch).entries()) {
+      const match = findWords(targets, removeCommas(gridElement));
       for (const [word, indexRange] of Object.entries(match)) {
-        result[word] = indexRange.map(xCoordinate => [xCoordinate, index]);
+        const mappingFunction = getCoordinateMappingFunction(gridElementToSearch);
+        result[word] = indexRange.map(indexInElement => mappingFunction(index, indexInElement));
       }
     }
+
+    return result;
   }
 
-  function searchColumns(): void {
-    for (const [index, col] of getColumns().entries()) {
-      const match = findWords(targets, removeCommas(col));
-      for (const [word, indexRange] of Object.entries(match)) {
-        result[word] = indexRange.map(yCoordinate => [index, yCoordinate]);
-      }
-    }
+  function getElements(gridElementToSearch: string): string[] {
+    if (gridElementToSearch === 'rows') return getRows();
+    else if (gridElementToSearch === 'columns') return getColumns();
+    else if (gridElementToSearch === 'diagonals') return getDiagonals();
+    else throw new Error('gridElementToSearch must be one of ["rows", "columns", "diagonals"');
   }
 
-  function searchDiagonals(): void {
-    for (const [diagonalIndex, diagonal] of getDiagonals().entries()) {
-      const match = findWords(targets, diagonal);
-      for (const [word, indexRange] of Object.entries(match)) {
-        result[word] = indexRange.map(indexInDiag => {
-          const yCoordinate = indexInDiag;
-          const xCoordinate =
-            diagonalIndex <= puzzleGrid.length * 2
-              ? diagonalIndex - indexInDiag
-              : Math.abs((diagonalIndex % (puzzleGrid.length * 2 - 1)) - (puzzleGrid.length - 1)) + indexInDiag;
-          return [xCoordinate, yCoordinate];
-        });
-      }
-    }
+  function getCoordinateMappingFunction(gridElementToSearch: string) {
+    if (gridElementToSearch === 'rows')
+      return (elementNumber: number, indexInElement: number) => [indexInElement, elementNumber];
+    else if (gridElementToSearch === 'columns')
+      return (elementNumber: number, indexInElement: number) => [elementNumber, indexInElement];
+    else if (gridElementToSearch === 'diagonals')
+      return (elementNumber: number, indexInElement: number) => {
+        const yCoordinate = indexInElement;
+        const xCoordinate =
+          elementNumber <= puzzleGrid.length * 2
+            ? elementNumber - indexInElement
+            : Math.abs((elementNumber % (puzzleGrid.length * 2 - 1)) - (puzzleGrid.length - 1)) + indexInElement;
+        return [xCoordinate, yCoordinate];
+      };
+    else throw new Error('gridElementToSearch must be one of ["rows", "columns", "diagonals"');
   }
 
   function getRows(): string[] {
